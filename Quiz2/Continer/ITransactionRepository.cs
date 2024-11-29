@@ -9,6 +9,8 @@ namespace Quiz2.Continer
 {
     public interface ITransactionRepository
     {
+        public void Transfer(string sourceCard, string destinationCard, float transferAmount);
+
         public List<Card> GetTransactions(string sourceCard);
     }
 }

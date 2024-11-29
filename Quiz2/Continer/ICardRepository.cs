@@ -9,6 +9,5 @@ namespace Quiz2.Continer
 {
     public interface ICardRepository
     {
-        public void Transfer(string sourceCard,string destinationCard,float transferAmount);
     }
 }
