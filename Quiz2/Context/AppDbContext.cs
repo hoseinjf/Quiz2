@@ -20,6 +20,25 @@ namespace Quiz2.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Card>().HasData
+                (
+                    new Card
+                    {
+                        CardNumber = "1234567891012345",
+                        HolderName = "hasan",
+                        Password = "123",
+                        Balance = 100,
+                        IsActive = true
+                    },
+                    new Card
+                    {
+                        CardNumber = "1234567891012346",
+                        HolderName = "ali",
+                        Password = "123",
+                        Balance = 200,
+                        IsActive = true
+                    }
+                );
             base.OnModelCreating(modelBuilder);
         }
     }
