@@ -28,6 +28,14 @@ namespace Quiz2.Repository
                     {
                         userAc.Balance -= transferAmount;
                         destinationAc.Balance += transferAmount;
+                        Transaction transaction = new Transaction()
+                        {
+                            SourceCardNumber = sourceCard,
+                            DestinationCardNumber = destinationCard,
+                            Amount = transferAmount,
+                            isSuccessful = true,
+                            TransactionDate = DateTime.UtcNow
+                        };
                         appDbContext.SaveChanges();
                     }
                 }
