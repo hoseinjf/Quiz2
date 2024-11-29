@@ -36,9 +36,14 @@ namespace Quiz2.Repository
             }
         }
 
-        public List<Card> GetTransactions(string sourceCard)
+        public List<Transaction> GetTransactions(string sourceCard)
         {
-            throw new NotImplementedException();
+            var ac=appDbContext.Transactions.Where(x=>x.SourceCardNumber==sourceCard);
+            if (ac != null) 
+            {
+                return ac.ToList();
+            }
+            return new List<Transaction>();
         }
 
     }

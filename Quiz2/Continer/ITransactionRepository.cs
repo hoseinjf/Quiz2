@@ -11,6 +11,6 @@ namespace Quiz2.Continer
     {
         public void Transfer(string sourceCard, string destinationCard, float transferAmount);
 
-        public List<Card> GetTransactions(string sourceCard);
+        public List<Transaction> GetTransactions(string sourceCard);
     }
 }
