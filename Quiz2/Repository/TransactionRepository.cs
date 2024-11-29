@@ -18,21 +18,19 @@ namespace Quiz2.Repository
         }
         public void Transfer(string sourceCard, string destinationCard, float transferAmount)
         {
-            var accuont = appDbContext.Transactions.FirstOrDefault
-                (
-                x=>x.SourceCardNumber==sourceCard && 
-                x.DestinationCardNumber==destinationCard
-                );
-            if (accuont != null) 
+            var userAc = appDbContext.Cards.FirstOrDefault(x=>x.CardNumber==sourceCard);
+            var destinationAc=appDbContext.Cards.FirstOrDefault(y=>y.CardNumber==destinationCard);
+            if (userAc != null && destinationAc !=null) 
             {
                 if (transferAmount>0)
                 {
-                    if (accuont.Amount > transferAmount)
+                    if (userAc.Balance > transferAmount)
                     {
-
+                        userAc.Balance -= transferAmount;
+                        destinationAc.Balance += transferAmount;
+                        appDbContext.SaveChanges();
                     }
                 }
-
             }
         }
 
