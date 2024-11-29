@@ -16,9 +16,5 @@ namespace Quiz2.Repository
         {
             appDbContext=new AppDbContext();
         }
-        public void Transfer(string sourceCard, string destinationCard, float transferAmount)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

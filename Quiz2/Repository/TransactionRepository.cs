@@ -18,7 +18,22 @@ namespace Quiz2.Repository
         }
         public void Transfer(string sourceCard, string destinationCard, float transferAmount)
         {
-            throw new NotImplementedException();
+            var accuont = appDbContext.Transactions.FirstOrDefault
+                (
+                x=>x.SourceCardNumber==sourceCard && 
+                x.DestinationCardNumber==destinationCard
+                );
+            if (accuont != null) 
+            {
+                if (transferAmount>0)
+                {
+                    if (accuont.Amount > transferAmount)
+                    {
+
+                    }
+                }
+
+            }
         }
 
         public List<Card> GetTransactions(string sourceCard)
