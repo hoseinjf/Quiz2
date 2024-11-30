@@ -9,5 +9,6 @@ namespace Quiz2.Continer
 {
     public interface ICardRepository
     {
+        public Card GetCardByCardNumber(string cardNumber);
     }
 }

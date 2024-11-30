@@ -16,38 +16,49 @@ namespace Quiz2.Repository
         {
             appDbContext = new AppDbContext();
         }
-        public void Transfer(string sourceCard, string destinationCard, float transferAmount)
+        public bool Transfer(int sourceCard, int destinationCard, float transferAmount)
         {
-            var userAc = appDbContext.Cards.FirstOrDefault(x=>x.CardNumber==sourceCard);
-            var destinationAc=appDbContext.Cards.FirstOrDefault(y=>y.CardNumber==destinationCard);
+            
+            var userAc = appDbContext.Cards.FirstOrDefault(x=>x.Id==sourceCard);
+            var destinationAc=appDbContext.Cards.FirstOrDefault(y=>y.Id==destinationCard);
             if (userAc != null && destinationAc !=null) 
             {
                 if (transferAmount>0)
                 {
                     if (userAc.Balance > transferAmount)
                     {
-                        userAc.Balance -= transferAmount;
-                        destinationAc.Balance += transferAmount;
-                        Transaction transaction = new Transaction()
+                        if (userAc.CardNumber != destinationAc.CardNumber)
                         {
-                            SourceCardNumber = sourceCard,
-                            DestinationCardNumber = destinationCard,
-                            Amount = transferAmount,
-                            isSuccessful = true,
-                            TransactionDate = DateTime.UtcNow
-                        };
-                        appDbContext.SaveChanges();
+                            userAc.Balance -= transferAmount;
+                            destinationAc.Balance += transferAmount;
+                            Transaction transaction = new Transaction()
+                            {
+                                SourceCardId = sourceCard,
+                                SourceCard = userAc,
+                                DestinationCard = destinationAc,
+                                DestinationCardId = destinationCard,
+                                Amount = transferAmount,
+                                isSuccessful = true,
+                                TransactionDate = DateTime.UtcNow
+                            };
+                            appDbContext.Transactions.Add(transaction);
+                            appDbContext.SaveChanges();
+                            return true;
+                        }
                     }
                 }
             }
+            return false;
         }
 
-        public List<Transaction> GetTransactions(string sourceCard)
+        public List<Transaction> GetTransactions(int Id)
         {
-            var ac=appDbContext.Transactions.Where(x=>x.SourceCardNumber==sourceCard);
+            //var userAc = appDbContext.Cards.FirstOrDefault(x => x.Id == sourceCard);
+            var ac=appDbContext.Transactions.Where(x=>x.SourceCardId==Id
+            || x.DestinationCardId==Id).ToList();
             if (ac != null) 
             {
-                return ac.ToList();
+                return ac;
             }
             return new List<Transaction>();
         }

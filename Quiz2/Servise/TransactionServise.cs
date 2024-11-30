@@ -12,22 +12,33 @@ namespace Quiz2.Servise
     public class TransactionServise
     {
         private readonly ITransactionRepository _transactionRepository;
+        private readonly CardServise cardServise;
         public TransactionServise()
         {
             _transactionRepository = new TransactionRepository();
+            cardServise = new CardServise();
         }
-        public void Transfer(string sourceCard, string destinationCard, float transferAmount)
+        public bool Transfer(string sourceCard, string destinationCard, float transferAmount)
         {
-
-            _transactionRepository.Transfer(sourceCard, destinationCard, transferAmount);
+            var soursCardId = cardServise.Get(sourceCard).Id;
+            var destinationCardId = cardServise.Get(destinationCard).Id;
+            if (_transactionRepository.Transfer(soursCardId, destinationCardId, transferAmount) == true)
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
         public List<Transaction> GetTransactions(string sourceCard)
         {
-            var ac = _transactionRepository.GetTransactions(sourceCard);
+            var ac2 = cardServise.Get(sourceCard).Id;
+            var ac = _transactionRepository.GetTransactions(ac2);
             foreach (var item in ac) 
             {
-                Console.WriteLine($"Source Card Number: {item.SourceCardNumber} -- " +
-                    $"Destination Card Number: {item.DestinationCardNumber} -- " +
+                Console.WriteLine($"Source Card Number: {item.SourceCard.CardNumber} -- " +
+                    $"Destination Card Number: {item.DestinationCard.CardNumber} -- " +
                     $"Transaction Date: {item.TransactionDate} -- " +
                     $"Amount: {item.Amount} -- " +
                     $"Successful: {item.isSuccessful}");

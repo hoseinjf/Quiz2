@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quiz2.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace Quiz2.Continer
 {
     public interface IUserLogin
     {
-        public bool Login(string cardNumber, string password);
+        public Card Login(string cardNumber, string password);
     }
 }

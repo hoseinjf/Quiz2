@@ -16,5 +16,10 @@ namespace Quiz2.Repository
         {
             appDbContext=new AppDbContext();
         }
+        public Card GetCardByCardNumber(string cardNumber)
+        {
+            var card = appDbContext.Cards.FirstOrDefault(x=>x.CardNumber == cardNumber);
+            return card;
+        }
     }
 }
