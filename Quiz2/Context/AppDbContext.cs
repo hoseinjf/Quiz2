@@ -13,6 +13,7 @@ namespace Quiz2.Context
     {
         public DbSet<Card> Cards { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DbConfig.ConnectionString);
@@ -30,6 +31,12 @@ namespace Quiz2.Context
                 .HasMany(x => x.TransactionsAsDestination)
                 .WithOne(x => x.DestinationCard)
                 .HasForeignKey(x => x.DestinationCardId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Cards)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Card>().HasData

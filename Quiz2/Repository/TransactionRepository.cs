@@ -53,7 +53,6 @@ namespace Quiz2.Repository
 
         public List<Transaction> GetTransactions(int Id)
         {
-            //var userAc = appDbContext.Cards.FirstOrDefault(x => x.Id == sourceCard);
             var ac=appDbContext.Transactions.Where(x=>x.SourceCardId==Id
             || x.DestinationCardId==Id).ToList();
             if (ac != null) 

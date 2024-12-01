@@ -2,7 +2,7 @@
 using Quiz2.Entity;
 using Quiz2.Servise;
 
-LoginServise login = new LoginServise();
+CardServise cardServise = new CardServise();
 TransactionServise transaction = new TransactionServise();
 bool isRun = true;
 bool isRun2 = true;
@@ -15,12 +15,12 @@ do
     userCard = Console.ReadLine();
     Console.Write("enter your password: ");
     password = Console.ReadLine();
-    var card = login.Login(userCard, password);
+    var card = cardServise.Login(userCard, password);
     if (card != null)
     {
         do
         {
-            var user = OnlineUser.User;
+            var user = Online.card;
             user = card;
             Console.Clear();
             Console.WriteLine(" 1- Card to Card");

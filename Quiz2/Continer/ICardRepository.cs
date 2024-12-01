@@ -10,5 +10,9 @@ namespace Quiz2.Continer
     public interface ICardRepository
     {
         public Card GetCardByCardNumber(string cardNumber);
+        public bool ChengPassword(string username,string oldPassword,string newPassword);
+        public float ShowCardBalans(string cardNumber);
+        public float SetTax(float Amount);
+        public Card Login(string cardNumber, string password);
     }
 }

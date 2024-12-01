@@ -19,5 +19,32 @@ namespace Quiz2.Servise
         {
             return cardRepository.GetCardByCardNumber(code);
         }
+        public float SetTax(float Amount)
+        {
+            return cardRepository.SetTax(Amount);
+        }
+        public float ShowCardBalans(string cardNumber)
+        {
+            return cardRepository.ShowCardBalans(cardNumber);
+        }
+        public bool ChengPassword(string username, string oldPassword, string newPassword)
+        {
+            return cardRepository.ChengPassword(username, oldPassword, newPassword);
+        }
+        public Card Login(string cardNumber, string password)
+        {
+            var login = cardRepository.Login(cardNumber, password);
+            if (login != null)
+            {
+                Console.WriteLine("welcom");
+                return login;
+            }
+            else
+            {
+                Console.WriteLine("card number or password is not true");
+                return null;
+            }
+        }
+
     }
 }

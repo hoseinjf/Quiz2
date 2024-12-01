@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Quiz2.Entity
 {
-    public static class OnlineUser
+    public static class Online
     {
-        public static Card User { get; set; }
+        public static User user { get; set; }
+        public static Card card { get; set; }
     }
 }
