@@ -21,8 +21,10 @@ namespace Quiz2.Servise
         public bool Transfer(string sourceCard, string destinationCard, float transferAmount)
         {
             var soursCardId = cardServise.Get(sourceCard).Id;
+            //var sCard = cardServise.Get(sourceCard);
             var destinationCardId = cardServise.Get(destinationCard).Id;
-            transferAmount=cardServise.SetTax(transferAmount);
+            var dCard = cardServise.Get(destinationCard);
+            transferAmount =cardServise.SetTax(transferAmount);
             if (_transactionRepository.Transfer(soursCardId, destinationCardId, transferAmount) == true)
             {
                 return true;

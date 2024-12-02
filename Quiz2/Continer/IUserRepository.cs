@@ -10,6 +10,6 @@ namespace Quiz2.Continer
     public interface IUserRepository
     {
         public User Register(User user);
-        public bool Login(string username, string password);
+        public User Login(string username, string password);
     }
 }

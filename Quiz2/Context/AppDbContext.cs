@@ -38,28 +38,27 @@ namespace Quiz2.Context
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Card>().HasData
-                (
-                    new Card
-                    {
-                        Id = 1,
-                        CardNumber = "1234567891012345",
-                        HolderName = "hasan",
-                        Password = "123",
-                        Balance = 100,
-                        IsActive = true
-                    },
-                    new Card
-                    {
-                        Id = 2,
-                        CardNumber = "1234567891012346",
-                        HolderName = "ali",
-                        Password = "123",
-                        Balance = 200,
-                        IsActive = true
-                    }
-                );
+            //modelBuilder.Entity<Card>().HasData
+            //    (
+            //        new Card
+            //        {
+            //            Id = 1,
+            //            CardNumber = "1234567891012345",
+            //            HolderName = "melat",
+            //            Password = "123",
+            //            Balance = 100,
+            //            IsActive = true
+            //        },
+            //        new Card
+            //        {
+            //            Id = 2,
+            //            CardNumber = "1234567891012346",
+            //            HolderName = "melat",
+            //            Password = "123",
+            //            Balance = 200,
+            //            IsActive = true
+            //        }
+            //    );
             base.OnModelCreating(modelBuilder);
         }
     }

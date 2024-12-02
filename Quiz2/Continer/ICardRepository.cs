@@ -13,6 +13,8 @@ namespace Quiz2.Continer
         public bool ChengPassword(string username,string oldPassword,string newPassword);
         public float ShowCardBalans(string cardNumber);
         public float SetTax(float Amount);
-        public Card Login(string cardNumber, string password);
+        public Card Login(string username, string cardNumber, string password);
+        public int SendCode(string cardNumber);
+        public Card Add(Card card);
     }
 }

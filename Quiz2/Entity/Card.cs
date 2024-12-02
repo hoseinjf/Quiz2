@@ -19,6 +19,7 @@ namespace Quiz2.Entity
         public bool IsActive { get; set; }=true;
         public string Password { get; set; }
         public int WrongPasswordTries { get; set; } = 0;
+        public DateTime? CodeDate { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public List<Transaction> TransactionsAsSource { get; set; }=new List<Transaction>();

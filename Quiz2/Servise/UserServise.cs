@@ -17,7 +17,7 @@ namespace Quiz2.Servise
             _userRepository = new UserRepository();
         }
 
-        public bool Login(string username, string password)
+        public User Login(string username, string password)
         {
             return _userRepository.Login(username, password);
         }

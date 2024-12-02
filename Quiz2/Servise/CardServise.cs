@@ -15,6 +15,11 @@ namespace Quiz2.Servise
         {
             cardRepository = new CardRepository();
         }
+
+        public Card Add(Card card)
+        {
+            return cardRepository.Add(card);
+        }
         public Card Get(string code)
         {
             return cardRepository.GetCardByCardNumber(code);
@@ -31,9 +36,9 @@ namespace Quiz2.Servise
         {
             return cardRepository.ChengPassword(username, oldPassword, newPassword);
         }
-        public Card Login(string cardNumber, string password)
+        public Card Login(string username,string cardNumber, string password)
         {
-            var login = cardRepository.Login(cardNumber, password);
+            var login = cardRepository.Login(username, cardNumber, password);
             if (login != null)
             {
                 Console.WriteLine("welcom");
@@ -44,6 +49,10 @@ namespace Quiz2.Servise
                 Console.WriteLine("card number or password is not true");
                 return null;
             }
+        }
+        public int SendCode(string cardNumber) 
+        {
+            return cardRepository.SendCode(cardNumber);
         }
 
     }

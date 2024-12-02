@@ -16,15 +16,15 @@ namespace Quiz2.Repository
         {
             appDbContext = new AppDbContext();
         }
-        public bool Login(string username, string password)
+        public User Login(string username, string password)
         {
             var user = appDbContext.Users
                 .FirstOrDefault(x=>x.Username == username && x.Password == password);
             if (user != null) 
             {
-                return true;
+                return user;
             }
-            return false;
+            return null;
         }
 
         public User Register(User user)

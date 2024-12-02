@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Quiz2.Repository
 {
@@ -17,6 +18,19 @@ namespace Quiz2.Repository
             appDbContext = new AppDbContext();
         }
 
+        public Card Add(Card card)
+        {
+            Card card2 = new Card()
+            {
+                CardNumber=card.CardNumber,
+                Balance=card.Balance,
+                Password=card.Password,
+                UserId=card.UserId
+            };
+            appDbContext.Cards.Add(card2);
+            appDbContext.SaveChanges();
+            return card2;
+        }
         public bool ChengPassword(string username, string oldPassword, string newPassword)
         {
             var card = appDbContext.Cards
@@ -26,7 +40,7 @@ namespace Quiz2.Repository
             {
                 card.Password = newPassword;
                 //appDbContext.Cards.Update(oldPass);
-                appDbContext.Cards.Add(card);
+                //appDbContext.Cards.Add(card);
                 appDbContext.SaveChanges();
                 return true;
             }
@@ -35,7 +49,9 @@ namespace Quiz2.Repository
 
         public Card GetCardByCardNumber(string cardNumber)
         {
-            var card = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);
+            var card = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber );
+            var user = appDbContext.Users.FirstOrDefault(x => x.Id == card.UserId);
+            card.User = user;
             return card;
         }
 
@@ -46,10 +62,10 @@ namespace Quiz2.Repository
             {
                 if (Amount > 1000)
                 {
-                    tax = (Amount *1.5f)/100;
+                    tax = (Amount * 1.5f) / 100;
                     return Amount -= tax;
                 }
-                else if (Amount <= 1000) 
+                else if (Amount <= 1000)
                 {
                     tax = (Amount * 0.5f) / 100;
                     return Amount -= tax;
@@ -67,17 +83,48 @@ namespace Quiz2.Repository
             }
             return 0f;
         }
-        public Card Login(string cardNumber, string password)
+        public Card Login(string username,string cardNumber, string password)
         {
             var ac = appDbContext.Cards.FirstOrDefault
                 (x => x.CardNumber == cardNumber
-                && x.Password == password);
+                && x.Password == password && x.User.Username == username);
             if (ac != null)
             {
                 return ac;
             }
             return null;
         }
+        public int SendCode(string cardNumber)
+        {
+            try
+            {
+                string file = ("C:\\Users\\MOHO\\source\\repos\\Quiz2\\Quiz2\\File\\randCode.txt");
+                var ac = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);
+                ac.CodeDate = DateTime.Now.AddMinutes(2);
+                var date = ac.CodeDate;
+                if (ac != null)
+                {
+                    if (date <= DateTime.Now.AddMinutes(2))
+                    {
+                        Random random = new Random();
+                        var number = random.Next(10000, 99999);
+                        using (StreamWriter writer = new StreamWriter(file))
+                        {
+                            writer.WriteLine(number);
+                            Console.WriteLine(File.ReadAllText(file));
+                            Console.ReadKey();
+                            appDbContext.SaveChanges();
+                            return number;
+                        }
+                    }
+                }
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            return 0;
+        }
     }
 }

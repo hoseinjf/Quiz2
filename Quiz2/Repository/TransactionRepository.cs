@@ -16,11 +16,11 @@ namespace Quiz2.Repository
         {
             appDbContext = new AppDbContext();
         }
-        public bool Transfer(int sourceCard, int destinationCard, float transferAmount)
+        public bool Transfer(int sourceCardId, int destinationCardId, float transferAmount)
         {
             
-            var userAc = appDbContext.Cards.FirstOrDefault(x=>x.Id==sourceCard);
-            var destinationAc=appDbContext.Cards.FirstOrDefault(y=>y.Id==destinationCard);
+            var userAc = appDbContext.Cards.FirstOrDefault(x=>x.Id== sourceCardId);
+            var destinationAc=appDbContext.Cards.FirstOrDefault(y=>y.Id== destinationCardId);
             if (userAc != null && destinationAc !=null) 
             {
                 if (transferAmount>0)
@@ -33,10 +33,10 @@ namespace Quiz2.Repository
                             destinationAc.Balance += transferAmount;
                             Transaction transaction = new Transaction()
                             {
-                                SourceCardId = sourceCard,
+                                SourceCardId = sourceCardId,
                                 SourceCard = userAc,
                                 DestinationCard = destinationAc,
-                                DestinationCardId = destinationCard,
+                                DestinationCardId = destinationCardId,
                                 Amount = transferAmount,
                                 isSuccessful = true,
                                 TransactionDate = DateTime.UtcNow
