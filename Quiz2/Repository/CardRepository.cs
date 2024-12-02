@@ -12,6 +12,8 @@ namespace Quiz2.Repository
 {
     public class CardRepository : ICardRepository
     {
+        string file = ("C:\\Users\\MOHO\\source\\repos\\Quiz2\\Quiz2\\File\\randCode.txt");
+
         private readonly AppDbContext appDbContext;
         public CardRepository()
         {
@@ -22,10 +24,10 @@ namespace Quiz2.Repository
         {
             Card card2 = new Card()
             {
-                CardNumber=card.CardNumber,
-                Balance=card.Balance,
-                Password=card.Password,
-                UserId=card.UserId
+                CardNumber = card.CardNumber,
+                Balance = card.Balance,
+                Password = card.Password,
+                UserId = card.UserId
             };
             appDbContext.Cards.Add(card2);
             appDbContext.SaveChanges();
@@ -39,8 +41,6 @@ namespace Quiz2.Repository
             if (card != null)
             {
                 card.Password = newPassword;
-                //appDbContext.Cards.Update(oldPass);
-                //appDbContext.Cards.Add(card);
                 appDbContext.SaveChanges();
                 return true;
             }
@@ -49,7 +49,7 @@ namespace Quiz2.Repository
 
         public Card GetCardByCardNumber(string cardNumber)
         {
-            var card = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber );
+            var card = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);
             var user = appDbContext.Users.FirstOrDefault(x => x.Id == card.UserId);
             card.User = user;
             return card;
@@ -83,7 +83,7 @@ namespace Quiz2.Repository
             }
             return 0f;
         }
-        public Card Login(string username,string cardNumber, string password)
+        public Card Login(string username, string cardNumber, string password)
         {
             var ac = appDbContext.Cards.FirstOrDefault
                 (x => x.CardNumber == cardNumber
@@ -94,37 +94,38 @@ namespace Quiz2.Repository
             }
             return null;
         }
-        public int SendCode(string cardNumber)
+        public void SendCode(string cardNumber)
         {
             try
             {
-                string file = ("C:\\Users\\MOHO\\source\\repos\\Quiz2\\Quiz2\\File\\randCode.txt");
                 var ac = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);
-                ac.CodeDate = DateTime.Now.AddMinutes(2);
-                var date = ac.CodeDate;
-                if (ac != null)
-                {
-                    if (date <= DateTime.Now.AddMinutes(2))
-                    {
-                        Random random = new Random();
-                        var number = random.Next(10000, 99999);
-                        using (StreamWriter writer = new StreamWriter(file))
-                        {
-                            writer.WriteLine(number);
-                            Console.WriteLine(File.ReadAllText(file));
-                            Console.ReadKey();
-                            appDbContext.SaveChanges();
-                            return number;
-                        }
-                    }
-                }
+                ac.CodeDate = DateTime.Now.AddMinutes(1);
+                appDbContext.SaveChanges();
 
+                Random random = new Random();
+                var number = random.Next(10000, 99999);
+                using (StreamWriter writer = new StreamWriter(file))
+                {
+                    writer.WriteLine(number);
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception: " + e.Message);
+                throw new Exception("Exception: " + e.Message);
             }
-            return 0;
         }
+        public bool CheckCode(string input,string cardNumber)
+        {
+            var ac = appDbContext.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);   
+            if (ac.CodeDate>=DateTime.Now)
+            {
+                if (File.ReadAllText(file).Contains(input))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

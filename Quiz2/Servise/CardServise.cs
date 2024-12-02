@@ -50,9 +50,13 @@ namespace Quiz2.Servise
                 return null;
             }
         }
-        public int SendCode(string cardNumber) 
+        public void SendCode(string cardNumber) 
         {
-            return cardRepository.SendCode(cardNumber);
+            cardRepository.SendCode(cardNumber);
+        }
+        public bool CheckCode(string input, string cardNumber)
+        {
+            return cardRepository.CheckCode(input, cardNumber);
         }
 
     }

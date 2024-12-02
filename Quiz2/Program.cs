@@ -80,7 +80,7 @@ do
                                         Balance = cardBalans,
                                         Password = cardPassword,
                                         UserId = onUser.Id,
-                                        User=onUser
+                                        User = onUser
                                     };
                                     cardServise.Add(card1);
                                     Console.WriteLine("complete");
@@ -120,25 +120,28 @@ do
                                                         var send = cardServise.Get(destinationCard);
                                                         Console.WriteLine("The name of the destination account holder: "
                                                                       + send.User.FirstName + " " + send.User.LastName);
-                                                        Console.WriteLine("do you confirm [ y = yes || n = no ] ? ");
+                                                        cardServise.SendCode(onCard.CardNumber);
+                                                        Console.Write("enter Verification code: ");
                                                         var check = Console.ReadLine();
-                                                        if (check == "y".ToLower())
+                                                        if (cardServise.CheckCode(check,onCard.CardNumber) ==true)
                                                         {
                                                             var Transfer = transaction.Transfer(onCard.CardNumber, destinationCard, Amount);
                                                             if (Transfer == true)
                                                             {
                                                                 Console.WriteLine("The operation was done");
-
+                                                                Console.ReadKey();
+                                                                break;
                                                             }
                                                             else
                                                             {
                                                                 Console.WriteLine("The operation was not performed");
+                                                                Console.ReadKey();
+                                                                break;
                                                             }
-                                                            Console.ReadKey();
-                                                            break;
                                                         }
                                                         else
                                                         {
+                                                            Console.WriteLine("error");
                                                             break;
                                                         }
                                                     case "2":

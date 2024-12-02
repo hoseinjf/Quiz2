@@ -14,7 +14,8 @@ namespace Quiz2.Continer
         public float ShowCardBalans(string cardNumber);
         public float SetTax(float Amount);
         public Card Login(string username, string cardNumber, string password);
-        public int SendCode(string cardNumber);
+        public void SendCode(string cardNumber);
         public Card Add(Card card);
+        public bool CheckCode(string input, string cardNumber);
     }
 }

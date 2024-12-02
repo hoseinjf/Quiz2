@@ -36,8 +36,9 @@ namespace Quiz2.Servise
         }
         public List<Transaction> GetTransactions(string sourceCard)
         {
-            var ac2 = cardServise.Get(sourceCard).Id;
-            var ac = _transactionRepository.GetTransactions(ac2);
+            var ac2 = cardServise.Get(sourceCard);
+            var ac = _transactionRepository.GetTransactions(ac2.Id);
+
             foreach (var item in ac) 
             {
                 Console.WriteLine($"Source Card Number: {item.SourceCard.CardNumber} -- " +
